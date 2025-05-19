@@ -1,0 +1,37 @@
+# This is an example taken from https://wiki.archlinux.org/title/Msmtp
+
+# Set default values for all following accounts.
+* defaults
+:PROPERTIES:
+:MSMTP_AUTH: on
+:MSMTP_TLS: on
+:MSMTP_TLS_TRUST_FILE: /etc/ssl/certs/ca-certificates.crt
+:MSMTP_LOGFILE: ~/.msmtp.log
+:END:
+
+# Gmail
+* gmail
+:PROPERTIES:
+:MSMTP_HOST: smtp.gmail.com
+:MSMTP_PORT: 465
+:MSMTP_TLS_STARTTLS: off
+:MSMTP_FROM: username@gmail.com
+:MSMTP_USER: username
+:MSMTP_PASSWORD: plain-text-password
+:END:
+
+# A freemail service
+* freemail
+:PROPERTIES:
+:MSMTP_HOST: smtp.freemail.example
+:MSMTP_FROM: joe_smith@freemail.example
+:END:
+
+# Accounts can inherit info from another account
+* postmasterfreemail : freemail
+:PROPERTIES:
+:MSMTP_FROM: postmaster*@freemail.example           
+:END:
+
+# Set a default account
+* default : gmail

@@ -1,0 +1,79 @@
+* ox-msmtp
+
+
+  MSMTP configuration export for org-mode. This package is largely inspired by [[https://github.com/dantecatalfamo/ox-ssh][os-ssh]].
+** Commands
+   =ox-msmtp= provides the following interactive commands:
+   - =org-msmtp-export-as-config= Exports to a temporary buffer
+   - =org-msmtp-export-to-config= Exports to file with the extension
+     =.msmtprc=
+   - =org-msmtp-export-overwrite-user-config= Exports file, overwrites
+     user's =~/.msmtprc=. Prompts user with yes/no option before
+     doing so.
+
+   These commands are also exposed through the =org-export-dispatch= menu.
+** Variables
+   - =org-msmtp-header= An optional header that will be added to the
+     beginning of the export. This can be used for comments or rules
+     that apply to all hosts.
+   - =org-msmtp-export-suffix= The suffix that will be added to exported file.
+    Defaults to ~.msmtprc~.
+** Usage
+   Export headings with specific properties as entries in an MSMTP
+   configuration file. These properties correspond with the client
+   configuration options for MSMTP.
+
+   For a heading to be exported as a host, it must have either a
+   =HOSTNAME= or =IP= property. If an entry has both, =IP= takes
+   precedence. The host alias will be equal to the org title
+   or be overriden by the property =HOST_OVERRIDE=, if it is defined.
+
+   It can also contain one or more
+   optional parameters, listed in the table below.
+
+   | [[https://marlam.de/msmtp/msmtp.html][msmtp(1)]] option                  | ox-msmtp property                            |
+   |----------------------------------+----------------------------------------------|
+   | [[https://marlam.de/msmtp/msmtp.html#index-eval][eval]]                             | =MSMTP_EVAL=                                 |
+   | [[https://marlam.de/msmtp/msmtp.html#index-host][host]]                             | =MSMTP_HOST=                                 |
+   | [[https://marlam.de/msmtp/msmtp.html#index-port][port]]                             | =MSMTP_PORT=                                 |
+   | [[https://marlam.de/msmtp/msmtp.html#index-source_005fip][source_ip]]                        | =MSMTP_SOURCE_IP=                            |
+   | [[https://marlam.de/msmtp/msmtp.html#index-proxy_005fhost][proxy_host]]                       | =MSMTP_PROXY_HOST=                           |
+   | [[https://marlam.de/msmtp/msmtp.html#index-proxy_005fport][proxy_port]]                       | =MSMTP_PROXY_PORT=                           |
+   | [[https://marlam.de/msmtp/msmtp.html#index-socket][socket]]                           | =MSMTP_SOCKET=                               |
+   | [[https://marlam.de/msmtp/msmtp.html#index-timeout][timeout]]                          | =MSMTP_TIMEOUT=                              |
+   | [[https://marlam.de/msmtp/msmtp.html#index-protocol][protocol]]                         | =MSMTP_PROTOCOL=                             |
+   | [[https://marlam.de/msmtp/msmtp.html#index-domain][domain]]                           | =MSMTP_DOMAIN=                               |
+   | [[https://marlam.de/msmtp/msmtp.html#index-auth][auth]]                             | =MSMTP_AUTH=                                 |
+   | [[https://marlam.de/msmtp/msmtp.html#index-user][user]]                             | =MSMTP_USER=                                 |
+   | [[https://marlam.de/msmtp/msmtp.html#index-password][password]]                         | =MSMTP_PASSWORD=                             |
+   | [[https://marlam.de/msmtp/msmtp.html#index-passwordeval][passwordeval]]                     | =MSMTP_PASSWORDEVAL=                         |
+   | [[https://marlam.de/msmtp/msmtp.html#index-ntlmdomain][ntlmdomain]]                       | =MSMTP_NTLMDOMAIN=                           |
+   | [[https://marlam.de/msmtp/msmtp.html#index-tls][tls]]                              | =MSMTP_TLS=                                  |
+   | [[https://marlam.de/msmtp/msmtp.html#index-tls_005fstarttls][tls_starttls]]                     | =MSMTP_TLS_STARTTLS=                         |
+   | [[https://marlam.de/msmtp/msmtp.html#index-tls_005ftrust_005ffile][tls_trust_file]]                   | =MSMTP_TLS_TRUST_FILE=                       |
+   | [[https://marlam.de/msmtp/msmtp.html#index-tls_005fcrl_005ffile][tls_crl_file]]                     | =MSMTP_TLS_CRL_FILE=                         |
+   | [[https://marlam.de/msmtp/msmtp.html#index-tls_005ffingerprint][tls_fingerprint]]                  | =MSMTP_TLS_FINGERPRINT=                      |
+   | [[https://marlam.de/msmtp/msmtp.html#index-tls_005fkey_005ffile][tls_key_file]]                     | =MSMTP_TLS_KEY_FILE=                         |
+   | [[https://marlam.de/msmtp/msmtp.html#index-tls_005fcert_005ffile][tls_cert_file]]                    | =MSMTP_TLS_CERT_FILE=                        |
+   | [[https://marlam.de/msmtp/msmtp.html#index-tls_005fcertcheck][tls_certcheck]]                    | =MSMTP_TLS_CERTCHECK=                        |
+   | [[https://marlam.de/msmtp/msmtp.html#index-tls_005fpriorities][tls_priorities]]                   | =MSMTP_TLS_PRIORITIES=                       |
+   | [[https://marlam.de/msmtp/msmtp.html#index-tls_005fhost_005foverride][tls_host_override]]                | =MSMTP_TLS_HOST_OVERRIDE=                    |
+   | [[https://marlam.de/msmtp/msmtp.html#index-tls_005fmin_005fdh_005fprime_005fbits][tls_min_dh_prime_bits]]            | =MSMTP_TLS_HOST_OVERRID=                     |
+   | [[https://marlam.de/msmtp/msmtp.html#index-from][from]]                             | =MSMTP_FROM=                                 |
+   | [[https://marlam.de/msmtp/msmtp.html#index-from_005ffull_005fname][from_full_name]]                   | =MSMTP_FROM_FULL_NAME=                       |
+   | [[https://marlam.de/msmtp/msmtp.html#index-dsn_005fnotify][dns_notify]]                       | =MSMTP_DNS_NOTIFY=                           |
+   | [[https://marlam.de/msmtp/msmtp.html#index-dsn_005freturn][dns_return]]                       | =MSMTP_DNS_RETURN=                           |
+   | [[https://marlam.de/msmtp/msmtp.html#index-set_005ffrom_005fheader][set_from_header]]                  | =MSMTP_SET_FROM_HEADER=                      |
+   | [[https://marlam.de/msmtp/msmtp.html#index-set_005fdate_005fheader][set_date_header]]                  | =MSMTP_SET_DATE_HEADER=                      |
+   | [[https://marlam.de/msmtp/msmtp.html#index-set_005fmsgid_005fheader][set_msgid_header]]                 | =MSMTP_SET_MSGID_HEADER=                     |
+   | [[https://marlam.de/msmtp/msmtp.html#index-remove_005fbcc_005fheaders][remove_bcc_headers]]               | =MSMTP_REMOVE_BCC_HEADERS=                   |
+   | [[https://marlam.de/msmtp/msmtp.html#index-undisclosed_005frecipients][undisclosed_recipients]]           | =MSMTP_UNDISCLOSED_RECIPIENTS=               |
+   | [[https://marlam.de/msmtp/msmtp.html#index-logfile][logfile]]                          | =MSMTP_LOGFILE=                              |
+   | [[https://marlam.de/msmtp/msmtp.html#index-logfile_005ftime_005fformat][logfile_time_format]]              | =MSMTP_LOGFILE_TIME_FORMAT=                  |
+   | [[https://marlam.de/msmtp/msmtp.html#index-syslog][syslog]]                           | =MSMTP_SYSLOG=                               |
+   | [[https://marlam.de/msmtp/msmtp.html#index-aliases][aliases]]                          | =MSMTP_ALIASES=                              |
+   | [[https://marlam.de/msmtp/msmtp.html#index-auto_005ffrom][auto_from]]                        | =MSMTP_AUTO_FROM=                            |
+   | [[https://marlam.de/msmtp/msmtp.html#index-maildomain][maildomain]]                       | =MSMTP_MAILDOMAIN=                           |
+
+** Example
+   [[file:example.org]]
